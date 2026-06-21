@@ -1,0 +1,632 @@
+<style>
+.plant-index-grid{max-width:1400px;margin:24px auto 48px;padding:0 16px;}
+.plant-index-grid ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 16px;list-style:none;padding:0;margin:0;}
+.plant-index-grid li{position:relative;margin:0;padding:0;}
+.plant-index-grid a{display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid #2d6cdf;border-radius:8px;background:rgba(45,108,223,.08);text-decoration:none;line-height:1.35;min-height:70px;}
+.plant-index-grid a:hover{background:rgba(45,108,223,.18);transform:translateY(-1px);}
+.plant-index-grid .plant-index-img{width:110px;height:27px;object-fit:contain;image-rendering:auto;flex:0 0 auto;}
+.plant-index-grid .plant-index-name{display:block;min-width:0;}
+.plant-index-grid .plant-en{display:block;font-weight:700;color:#f0e6c8;}
+.plant-index-grid .plant-jp{display:block;color:#55aaff;margin-top:3px;}
+html{scroll-behavior:smooth;}
+
+/* v2 layout tweaks */
+html{scroll-behavior:auto!important;}
+.plant-index-grid{width:100%;max-width:none;margin:24px 0 48px;padding:0 18px;box-sizing:border-box;}
+.plant-index-grid ul{grid-template-columns:repeat(auto-fit,minmax(min(370px,100%),1fr));gap:14px;}
+.plant-index-grid a{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:8px;min-height:136px;text-align:center;padding:8px 18px;box-sizing:border-box;}
+.plant-index-grid .plant-index-name{order:1;display:block;min-height:0;}
+.plant-index-grid .plant-en{display:none!important;}
+.plant-index-grid .plant-jp{display:block;color:#55aaff;margin-top:0;font-weight:700;font-size:16px;line-height:1.35;}
+.plant-index-grid .plant-index-img{order:2;width:330px;max-width:100%;height:auto;aspect-ratio:220 / 54;object-fit:contain;image-rendering:auto;flex:0 0 auto;}
+.mutation-box{margin:24px 0;line-height:1.75;}
+.mutation-heading{font-weight:700;margin-bottom:10px;color:#f0e6c8;}
+.mutation-list{list-style:none;margin:0;padding:0;display:grid;gap:10px;}
+.mutation-item{position:relative;border-left:3px solid #2d6cdf;background:rgba(45,108,223,.07);padding:10px 46px 10px 12px;border-radius:6px;}
+.mutation-target{display:block;font-weight:700;font-size:1.04em;margin-bottom:3px;}
+.mutation-detail{display:block;padding-left:1em;text-indent:-1em;}
+.mutation-label{color:#f0e6c8;font-weight:700;}
+.plant-detail-section{position:relative;}
+.plant-detail-section>h4.wp-block-heading{padding-right:44px!important;}
+.element-remove-button{position:absolute;top:6px;right:6px;z-index:10;display:flex;align-items:center;justify-content:center;width:30px;height:30px;padding:0;border:1px solid #ff7b84;border-radius:50%;background:#a82430;color:#fff;font:700 22px/1 Arial,sans-serif;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.35);}
+.element-remove-button:hover{background:#d13a47;transform:scale(1.08);}
+.element-remove-button:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+.mutation-item>.element-remove-button{top:8px;right:8px;width:26px;height:26px;font-size:19px;}
+.plant-visibility-controls{display:flex;justify-content:flex-end;margin:12px 18px -10px;}
+.plant-reset-button{padding:8px 14px;border:1px solid #56adff;border-radius:7px;background:rgba(45,108,223,.14);color:#9bd1ff;font-family:inherit;font-size:15px;font-weight:700;line-height:1.4;cursor:pointer;}
+.plant-reset-button:hover{background:rgba(45,108,223,.3);color:#fff;}
+.plant-reset-button:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+.plant-reset-button:disabled{opacity:.45;cursor:default;}
+@media (max-width:700px){.plant-index-grid ul{grid-template-columns:1fr;}.plant-index-grid a{min-height:0;}.plant-index-grid .plant-jp{font-size:14px;}}
+</style><main class="main" id="main" itemscope="" itemtype="https://schema.org/Blog">
+<style id="garden-mutation-custom-style">
+/* Cookie Clicker 菜園リスト：ダーク表示用 */
+#main.main,
+#main .article,
+#main .entry-content {
+  background: #111719;
+  color: #f2eee3;
+}
+
+#main.main {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 18px 26px 28px;
+  box-sizing: border-box;
+  font-family: "Yu Gothic", "Yu Gothic UI", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+#main .article-header,
+#main .eye-catch-wrap,
+#main .sns-share,
+#main .date-tags,
+#main #toc,
+#main h1,
+#main h2,
+#main h3,
+#main #container1,
+#main .has-text-align-center strong {
+  display: none;
+}
+
+#main .entry-content > p:first-of-type,
+#main .entry-content > p:nth-of-type(2),
+#main .entry-content > p:nth-of-type(3),
+#main .entry-content > p:nth-of-type(4),
+#main .entry-content > p:nth-of-type(5),
+#main .entry-content > p:nth-of-type(6),
+#main .entry-content > p:nth-of-type(7),
+#main .entry-content > p:nth-of-type(8),
+#main .entry-content > p:nth-of-type(9),
+#main .entry-content > p:nth-of-type(10),
+#main .entry-content > p:nth-of-type(11),
+#main .entry-content > p:nth-of-type(12) {
+  display: none;
+}
+
+#main h4.wp-block-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 28px 0 12px;
+  padding: 0 0 4px 32px;
+  border-bottom: 2px solid #2d63ff;
+  color: #f0e4c5;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.25;
+  position: relative;
+}
+
+#main h4.wp-block-heading .plant-detail-name {
+  flex: 0 0 auto;
+}
+
+#main h4.wp-block-heading .plant-detail-img {
+  display: block;
+  width: 220px;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  image-rendering: pixelated;
+  flex: 0 1 220px;
+}
+
+#main h4.wp-block-heading::before {
+  content: "▣";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #2d63ff;
+  font-size: 21px;
+  line-height: 1.25;
+}
+
+#main .wp-block-image,
+#main .wp-block-image figure {
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+#main .wp-block-image img {
+  width: 220px;
+  height: auto;
+  image-rendering: pixelated;
+}
+
+#main p {
+  margin: 0 0 24px;
+  color: #f2eee3;
+  line-height: 1.75;
+}
+
+#main a {
+  color: #56adff;
+  text-decoration: none;
+}
+
+#main a:hover {
+  color: #9bd1ff;
+  text-decoration: underline;
+}
+
+#main em {
+  color: #f2eee3;
+  font-style: normal;
+}
+
+#main .red {
+  color: #ff7b7b;
+}
+
+#main .has-text-align-right {
+  text-align: right;
+  margin-top: 30px;
+  margin-bottom: 0;
+}
+
+#main .has-text-align-right + .wp-block-spacer {
+  height: 3px !important;
+}
+
+#main .has-text-align-right + .wp-block-spacer + h4.wp-block-heading {
+  margin-top: 10px;
+}
+
+#main .wp-block-spacer {
+  height: 16px !important;
+}
+
+#main br {
+  line-height: 1.9;
+}
+
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #111719;
+}
+
+#main .article,
+#main .entry-content {
+  width: 100%;
+  max-width: none;
+}
+
+#main p {
+  overflow-wrap: anywhere;
+}
+</style>
+<article class="article post-4648 post type-post status-publish format-standard has-post-thumbnail hentry category-cookieclicker-post tag-11-post tag-14-post" data-clarity-region="article" id="post-4648" itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting">
+<header class="article-header entry-header">
+<h1 class="entry-title" itemprop="headline">【菜園網羅編】クッキークリッカーの進め方！　番外編３</h1>
+<div class="eye-catch-wrap">
+<figure class="eye-catch" itemprop="image" itemscope="" itemtype="https://schema.org/ImageObject">
+<img alt="" class="attachment-700x500 size-700x500 eye-catch-image wp-post-image" decoding="async" fetchpriority="high" height="500" sizes="(max-width: 700px) 100vw, 700px" src="https://kleinsblog.com/wp-content/uploads/2021/03/samune-min.png" srcset="https://kleinsblog.com/wp-content/uploads/2021/03/samune-min.png 700w, https://kleinsblog.com/wp-content/uploads/2021/03/samune-min-300x214.png 300w" width="700"/> <meta content="https://kleinsblog.com/wp-content/uploads/2021/03/samune-min.png" itemprop="url"/>
+<meta content="700" itemprop="width"/>
+<meta content="500" itemprop="height"/>
+<span class="cat-label cat-label-136">クッキークリッカー解説</span></figure>
+</div>
+<div class="sns-share ss-col-2 ss-high-and-low-lc bc-brand-color sbc-hide ss-top">
+<div class="sns-share-buttons sns-buttons">
+<a aria-label="Xでシェア" class="sns-button share-button twitter-button twitter-share-button-sq x-corp-button x-corp-share-button-sq" href="https://x.com/intent/tweet?text=%E3%80%90%E8%8F%9C%E5%9C%92%E7%B6%B2%E7%BE%85%E7%B7%A8%E3%80%91%E3%82%AF%E3%83%83%E3%82%AD%E3%83%BC%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AB%E3%83%BC%E3%81%AE%E9%80%B2%E3%82%81%E6%96%B9%EF%BC%81%E3%80%80%E7%95%AA%E5%A4%96%E7%B7%A8%EF%BC%93&amp;url=https%3A%2F%2Fkleinsblog.com%2Fcookieclicker-s3%2F" rel="nofollow noopener noreferrer" target="_blank" title="Xでシェア"><span class="social-icon icon-x-corp"></span><span class="button-caption">X</span><span class="share-count twitter-share-count x-share-count"></span></a>
+<a aria-label="タイトルとURLをコピーする" class="sns-button share-button copy-button copy-share-button-sq" data-clipboard-text="【菜園網羅編】クッキークリッカーの進め方！　番外編３ https://kleinsblog.com/cookieclicker-s3/" role="button" tabindex="0" title="タイトルとURLをコピーする"><span class="social-icon icon-copy"></span><span class="button-caption">コピー</span><span class="share-count copy-share-count"></span></a>
+</div><!-- /.sns-share-buttons -->
+</div><!-- /.sns-share -->
+<div class="date-tags">
+<span class="post-date"><span aria-hidden="true" class="fa fa-clock-o"></span><span class="entry-date date published"><meta content="2021-03-05T16:00:03+09:00" itemprop="datePublished"/>2021.03.05</span></span><span class="post-update"><span aria-hidden="true" class="fa fa-history"></span><time class="entry-date date updated" datetime="2026-03-21T04:29:31+09:00" itemprop="dateModified">2026.03.21</time></span>
+</div>
+</header>
+<div class="entry-content cf" itemprop="mainEntityOfPage">
+<p>冬に窓を閉め切ってタイピングしていると謎に手元に風が吹き込んできて寒いすのえです。</p>
+<p>最終回と言いつつおまけでついてくる番外編その３、作物の交配リスト紹介をしていきましょう。</p>
+<p class="has-text-align-center"><span class="fz-16px">2021/05/02 一部内容に修正を入れました。情報提供ありがとうございます。</span></p>
+<p class="has-text-align-center"><span class="red"><span class="fz-14px"> </span><span class="fz-16px">&lt;注意&gt; 私が解説するバージョンは2.031です。バージョンアップで仕様が変更される可能性があるため、<br/>いつまでも正しいわけではありません。<br/>また、執筆の際このサイトを参考にしています。<span class="blue"> </span></span></span><a href="https://www55.atwiki.jp/cookieclickerjpn/"><span class="red"><span class="fz-16px"><span class="blue">cookie clicker 日本語wiki – アットウィキ</span></span></span></a></p>
+<div class="toc tnt-number toc-center tnt-number border-element" id="toc"><input checked="" class="toc-checkbox" id="toc-checkbox-1" type="checkbox"/><label class="toc-title" for="toc-checkbox-1">目次</label>
+<div class="toc-content">
+<ol class="toc-list open"><li><a href="#toc1" tabindex="0">一覧</a><ol><li><a href="#toc2" tabindex="0">一覧を読む前に</a></li><li><a href="#toc3" tabindex="0">一覧表</a></li><li><a href="#toc4" tabindex="0">目的別索引</a><ol><li><a href="#toc5" tabindex="0">Baker’s wheat | ベーカリー小麦</a></li><li><a href="#toc6" tabindex="0">Thumbcorn | 親指コーン</a></li><li><a href="#toc7" tabindex="0">Cronerice | ローバライス</a></li><li><a href="#toc8" tabindex="0">Gildmillet | 黄金キビ</a></li><li><a href="#toc9" tabindex="0">Ordinary clover | 普通のクローバー</a></li><li><a href="#toc10" tabindex="0">Golden clover | 黄金のクローバー</a></li><li><a href="#toc11" tabindex="0">Shimmerlily | キラキラユリ</a></li><li><a href="#toc12" tabindex="0">Elderwort | エルダーワート</a></li><li><a href="#toc13" tabindex="0">Bakeberry | ベイクベリー</a></li><li><a href="#toc14" tabindex="0">Chocoroot | チョコルート</a></li><li><a href="#toc15" tabindex="0">White chocoroot | ホワイトチョコルート</a></li><li><a href="#toc16" tabindex="0">White mildew | 白カビ</a></li><li><a href="#toc17" tabindex="0">Brown mold | 茶カビ</a></li><li><a href="#toc18" tabindex="0">Middleweed | お邪魔草</a></li><li><a href="#toc19" tabindex="0">Whiskerbloom | ネコノヒゲコスリ</a></li><li><a href="#toc20" tabindex="0">Chimerose | チャイムローズ</a></li><li><a href="#toc21" tabindex="0">Nursetulip | 保育チューリップ</a></li><li><a href="#toc22" tabindex="0">Drowsyfern | 寝落ちシダ</a></li><li><a href="#toc23" tabindex="0">Wardlichen | 番人苔</a></li><li><a href="#toc24" tabindex="0">Keenmoss | 目利きモス</a></li><li><a href="#toc25" tabindex="0">Queenbeet | 女王ビート</a></li><li><a href="#toc26" tabindex="0">Juicy queenbeet | 女王ビート・豊潤</a></li><li><a href="#toc27" tabindex="0">Duketater | 公爵芋</a></li><li><a href="#toc28" tabindex="0">Crumbspore | パン粉玉ホコリ</a></li><li><a href="#toc29" tabindex="0">Doughshroom | パン生地フスベ</a></li><li><a href="#toc30" tabindex="0">Glovemorel | グラブモレル</a></li><li><a href="#toc31" tabindex="0">Cheapcap | ケチシメジ</a></li><li><a href="#toc32" tabindex="0">Fool’s bolete | ホラチーニ</a></li><li><a href="#toc33" tabindex="0">Wrinklegill | 皺々エラ茸</a></li><li><a href="#toc34" tabindex="0">Greenrot | グリーンロット</a></li><li><a href="#toc35" tabindex="0">Shriekbulb | ギャーコン</a></li><li><a href="#toc36" tabindex="0">Tidygrass | 几帳面草</a></li><li><a href="#toc37" tabindex="0">Everdaisy | エバーデイジー</a></li><li><a href="#toc38" tabindex="0">Ichorpuff | ホテイアマイ</a></li></ol></li></ol></li></ol>
+</div>
+</div>
+<h2 class="wp-block-heading"><span id="toc1">一覧</span></h2>
+<p>標準で表示している作物の名称には <a href="https://natto0wtr.web.fc2.com/CookieClicker/">Cookieclicker日本語版</a> の翻訳をお借りしています。</p>
+<p>また、以下に出現するアンダーライン付きの青い文字はほぼすべてページ内リンクです。</p>
+<p>クリックすると指定の見出しまで自動で飛ぶことができます。</p>
+<p class="has-text-align-center">こんなかんじ→ᅠ<a href="#fst">一覧表</a>ᅠ←クリックで体験</p>
+<h3 class="wp-block-heading"><span id="toc2">一覧を読む前に</span></h3>
+<p>CpS：クッキーの生産量/秒</p>
+<p>CpC：クッキーの生産量/クリック</p>
+<p>GC：ゴールデンクッキー</p>
+<p>平均結実時間・平均寿命：成長に必要なティック数。<br/>隣のカッコ内に書かれている時間は1ティック=3分の土壌を利用しているときの平均時間。<br/></p>
+<div aria-hidden="true" class="wp-block-spacer" id="fst" style="height:16px"></div>
+<h3 class="wp-block-heading"><span id="toc3">全ての植物名を網羅した一覧</span></h3>
+<p class="has-text-align-center">植物名をクリックすると、各植物の詳細までスクロールします。</p>
+<div class="plant-index-grid">
+<ul>
+<li><a href="#bakerswheat"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-1.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ベーカリー小麦</span></span></a></li>
+<li><a href="#thumbcorn"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-2.png" width="220"/><span class="plant-index-name"><span class="plant-jp">親指コーン</span></span></a></li>
+<li><a href="#cronerice"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-3.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ローバライス</span></span></a></li>
+<li><a href="#gildmillet"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-4.png" width="220"/><span class="plant-index-name"><span class="plant-jp">黄金キビ</span></span></a></li>
+<li><a href="#ordinaryclover"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-5.png" width="220"/><span class="plant-index-name"><span class="plant-jp">普通のクローバー</span></span></a></li>
+<li><a href="#goldenclover"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-6.png" width="220"/><span class="plant-index-name"><span class="plant-jp">黄金のクローバー</span></span></a></li>
+<li><a href="#shimmerlily"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-7.png" width="220"/><span class="plant-index-name"><span class="plant-jp">キラキラユリ</span></span></a></li>
+<li><a href="#elderwort"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-8.png" width="220"/><span class="plant-index-name"><span class="plant-jp">エルダーワート</span></span></a></li>
+<li><a href="#bakeberry"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-9.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ベイクベリー</span></span></a></li>
+<li><a href="#chocoroot"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-10.png" width="220"/><span class="plant-index-name"><span class="plant-jp">チョコルート</span></span></a></li>
+<li><a href="#whitechocoroot"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-11.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ホワイトチョコルート</span></span></a></li>
+<li><a href="#whitemildew"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-12.png" width="220"/><span class="plant-index-name"><span class="plant-jp">白カビ</span></span></a></li>
+<li><a href="#brownmold"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-13.png" width="220"/><span class="plant-index-name"><span class="plant-jp">茶カビ</span></span></a></li>
+<li><a href="#middleweed"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-14.png" width="220"/><span class="plant-index-name"><span class="plant-jp">お邪魔草</span></span></a></li>
+<li><a href="#whiskerbloom"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-15.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ネコノヒゲコスリ</span></span></a></li>
+<li><a href="#chimerose"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-16.png" width="220"/><span class="plant-index-name"><span class="plant-jp">チャイムローズ</span></span></a></li>
+<li><a href="#nursetulip"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-17.png" width="220"/><span class="plant-index-name"><span class="plant-jp">保育チューリップ</span></span></a></li>
+<li><a href="#drowsyfern"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-18.png" width="220"/><span class="plant-index-name"><span class="plant-jp">寝落ちシダ</span></span></a></li>
+<li><a href="#wardlichen"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-19.png" width="220"/><span class="plant-index-name"><span class="plant-jp">番人苔</span></span></a></li>
+<li><a href="#keenmoss"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-20.png" width="220"/><span class="plant-index-name"><span class="plant-jp">目利きモス</span></span></a></li>
+<li><a href="#queenbeet"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-21.png" width="220"/><span class="plant-index-name"><span class="plant-jp">女王ビート</span></span></a></li>
+<li><a href="#juicyqueenbeet"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-22.png" width="220"/><span class="plant-index-name"><span class="plant-jp">女王ビート・豊潤</span></span></a></li>
+<li><a href="#duketater"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-23.png" width="220"/><span class="plant-index-name"><span class="plant-jp">公爵芋</span></span></a></li>
+<li><a href="#crumbspore"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-24.png" width="220"/><span class="plant-index-name"><span class="plant-jp">パン粉玉ホコリ</span></span></a></li>
+<li><a href="#doughshroom"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-25.png" width="220"/><span class="plant-index-name"><span class="plant-jp">パン生地フスベ</span></span></a></li>
+<li><a href="#glovemorel"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-26.png" width="220"/><span class="plant-index-name"><span class="plant-jp">グラブモレル</span></span></a></li>
+<li><a href="#cheapcap"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-27.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ケチシメジ</span></span></a></li>
+<li><a href="#foolsbolete"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-28.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ホラチーニ</span></span></a></li>
+<li><a href="#wrinklegill"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-29.png" width="220"/><span class="plant-index-name"><span class="plant-jp">皺々エラ茸</span></span></a></li>
+<li><a href="#greenrot"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-30.png" width="220"/><span class="plant-index-name"><span class="plant-jp">グリーンロット</span></span></a></li>
+<li><a href="#shriekbulb"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-31.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ギャーコン</span></span></a></li>
+<li><a href="#tidygrass"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-32.png" width="220"/><span class="plant-index-name"><span class="plant-jp">几帳面草</span></span></a></li>
+<li><a href="#everdaisy"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-33.png" width="220"/><span class="plant-index-name"><span class="plant-jp">エバーデイジー</span></span></a></li>
+<li><a href="#ichorpuff"><img alt="" class="plant-index-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-34.png" width="220"/><span class="plant-index-name"><span class="plant-jp">ホテイアマイ</span></span></a></li>
+</ul>
+</div>
+<div aria-hidden="true" class="wp-block-spacer" id="bakerswheat" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc5">ベーカリー小麦</span><img alt="" class="wp-image-4655 plant-detail-img" decoding="async" height="54" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-1.png" width="220"/></h4>
+<p>平均結実時間：5ティック(15分)<br/>平均寿命:13ティック(39分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#thumbcorn">親指コーン</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#bakerswheat">ベーカリー小麦</a>（平均結実時間：5ティック(15分)／平均寿命：13ティック(39分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>3ティック(9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>15ティック(45分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#cronerice">ローバライス</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#thumbcorn">親指コーン</a>（平均結実時間：3ティック(9分)／平均寿命：15ティック(45分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>134ティック(6時間42分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>74ティック(3時間42分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#ordinaryclover">普通のクローバー</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#gildmillet">黄金キビ</a>（平均結実時間：15ティック(45分)／平均寿命：37ティック(1時間51分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>20ティック(1時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>58ティック(2時間54分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#goldenclover">黄金のクローバー</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#gildmillet">黄金キビ</a>（平均結実時間：15ティック(45分)／平均寿命：37ティック(1時間51分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>5ティック(15分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>10ティック(30分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#bakeberry">ベイクベリー</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#bakerswheat">ベーカリー小麦</a>（平均結実時間：5ティック(15分)／平均寿命：13ティック(39分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>34ティック(1時間42分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>67ティック(3時間21分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#chocoroot">チョコルート</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#brownmold">茶カビ</a>（平均結実時間：5ティック(15分)／平均寿命：8ティック(24分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>7ティック(21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>25ティック(1時間15分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#tidygrass">几帳面草</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#whitechocoroot">ホワイトチョコルート</a>（平均結実時間：7ティック(21分)／平均寿命：25ティック(1時間15分)）</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>80ティック(4時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>200ティック(10時間)</span></li></ul></div>
+
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="thumbcorn" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc6">親指コーン</span><img alt="" class="wp-image-4656 plant-detail-img" decoding="async" height="54" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-2.png" width="220"/></h4>
+<p>平均結実時間：3ティック(9分)<br/>平均寿命：15ティック(45分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#cronerice">ローバライス</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#bakerswheat">ベーカリー小麦</a>（平均結実時間：5ティック(15分)／平均寿命：13ティック(39分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>134ティック(6時間42分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>74ティック(3時間42分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#gildmillet">黄金キビ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#cronerice">ローバライス</a>（平均結実時間：134ティック(6時間42分)／平均寿命：74ティック(3時間42分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>15ティック(45分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>37ティック(1時間51分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#glovemorel">グラブモレル</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#crumbspore">パン粉玉ホコリ</a>（平均結実時間：15ティック(45分)／平均寿命：23ティック(1時間9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>7ティック(21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>9ティック(27分)</span></li></ul></div>
+<p>交配：<a href="#bakerswheat">ベーカリー小麦</a> * 2以上 [5%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="cronerice" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc7">ローバライス</span><img alt="" class="wp-image-4657 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-3.png" width="220"/></h4>
+<p>平均結実時間：134ティック(6時間42分)<br/>平均寿命：74ティック(3時間42分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#gildmillet">黄金キビ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#thumbcorn">親指コーン</a>（平均結実時間：3ティック(9分)／平均寿命：15ティック(45分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>15ティック(45分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>37ティック(1時間51分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#elderwort">エルダーワート</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#shimmerlily">キラキラユリ</a>（平均結実時間：9ティック(27分)／平均寿命：13ティック(39分)）</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>164ティック(8時間12分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>なし</span></li><li class="mutation-item"><span class="mutation-target"><a href="#wardlichen">番人苔</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#whitemildew">白カビ</a>（平均結実時間：5ティック(15分)／平均寿命：8ティック(24分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>10ティック(30分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>15ティック(45分)</span></li></ul></div>
+<p>交配：( <a href="#bakerswheat">ベーカリー小麦</a> * 1以上 )&amp;( <a href="#thumbcorn">親指コーン</a> * 1以上 ) [1%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="gildmillet" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc8">黄金キビ</span><img alt="" class="wp-image-4658 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-4.png" width="220"/></h4>
+<p>平均結実時間：15ティック(45分)<br/>平均寿命：37ティック(1時間51分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#ordinaryclover">普通のクローバー</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#bakerswheat">ベーカリー小麦</a>（平均結実時間：5ティック(15分)／平均寿命：13ティック(39分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>20ティック(1時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>58ティック(2時間54分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#shimmerlily">キラキラユリ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#ordinaryclover">普通のクローバー</a>（平均結実時間：20ティック(1時間)／平均寿命：58ティック(2時間54分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>9ティック(27分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>13ティック(39分)</span></li></ul></div>
+<p>交配：( <a href="#cronerice">ローバライス</a> * 1以上 )&amp;( <a href="#thumbcorn">親指コーン</a> * 1以上 ) [3%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="ordinaryclover" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc9">普通のクローバー</span><img alt="" class="wp-image-4659 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-5.png" width="220"/></h4>
+<p>平均結実時間：20ティック(1時間)<br/>平均寿命：58ティック(2時間54分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#goldenclover">黄金のクローバー</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#ordinaryclover">普通のクローバー</a>（平均結実時間：20ティック(1時間)／平均寿命：58ティック(2時間54分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>5ティック(15分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>10ティック(30分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#shimmerlily">キラキラユリ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#gildmillet">黄金キビ</a>（平均結実時間：15ティック(45分)／平均寿命：37ティック(1時間51分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>9ティック(27分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>13ティック(39分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#greenrot">グリーンロット</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#whitemildew">白カビ</a>（平均結実時間：5ティック(15分)／平均寿命：8ティック(24分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>4ティック(12分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>6ティック(18分)</span></li></ul></div>
+<p>交配：( <a href="#bakerswheat">ベーカリー小麦</a> * 1以上 )&amp;( <a href="#gildmillet">黄金キビ</a> * 1以上 ) [3%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="goldenclover" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc10">黄金のクローバー</span><img alt="" class="wp-image-4660 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-6.png" width="220"/></h4>
+<p>平均結実時間：5ティック(15分)<br/>平均寿命：10ティック(30分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：<a href="#ordinaryclover">普通のクローバー</a> * 4以上 [0.07%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="shimmerlily" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc11">キラキラユリ</span><img alt="" class="wp-image-4661 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-7.png" width="220"/></h4>
+<p>平均結実時間：9ティック(27分)<br/>平均寿命：13ティック(39分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#elderwort">エルダーワート</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#cronerice">ローバライス</a>（平均結実時間：134ティック(6時間42分)／平均寿命：74ティック(3時間42分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>164ティック(8時間12分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>なし</span></li><li class="mutation-item"><span class="mutation-target"><a href="#whiskerbloom">ネコノヒゲコスリ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#whitechocoroot">ホワイトチョコルート</a>（平均結実時間：7ティック(21分)／平均寿命：25ティック(1時間15分)）</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>20ティック(1時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>34ティック(1時間42分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#chimerose">チャイムローズ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#whiskerbloom">ネコノヒゲコスリ</a>（平均結実時間：20ティック(1時間)／平均寿命：34ティック(1時間42分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>18ティック(54分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>58ティック(2時間54分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#cheapcap">ケチシメジ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#crumbspore">パン粉玉ホコリ</a>（平均結実時間：15ティック(45分)／平均寿命：23ティック(1時間9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>3ティック(9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>8ティック(24分)</span></li></ul></div>
+<p>交配：( <a href="#gildmillet">黄金キビ</a> * 1以上 )&amp;( <a href="#ordinaryclover">普通のクローバー</a> * 1以上 ) [2%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="elderwort" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc12">エルダーワート</span><img alt="" class="wp-image-4662 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-8.png" width="220"/></h4>
+<p>平均結実時間：164ティック(8時間12分)<br/>平均寿命：なし</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#everdaisy">エバーデイジー</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#tidygrass">几帳面草</a>（平均結実時間：80ティック(4時間)／平均寿命：200ティック(10時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>251ティック(12時間33分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>なし</span></li><li class="mutation-item"><span class="mutation-target"><a href="#ichorpuff">ホテイアマイ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#crumbspore">パン粉玉ホコリ</a>（平均結実時間：15ティック(45分)／平均寿命：23ティック(1時間9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>20ティック(1時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>58ティック(2時間54分)</span></li></ul></div>
+<p>交配：( <a href="#shimmerlily">キラキラユリ</a> * 1以上 )&amp;( <a href="#cronerice">ローバライス</a> * 1以上 ) [1%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="bakeberry" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc13">ベイクベリー</span><img alt="" class="wp-image-4663 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-9.png" width="220"/></h4>
+<p>平均結実時間：34ティック(1時間42分)<br/>平均寿命：67ティック(3時間21分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#queenbeet">女王ビート</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#chocoroot">チョコルート</a>（平均結実時間：7ティック(21分)／平均寿命：25ティック(1時間15分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>67ティック(3時間21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>84ティック(4時間12分)</span></li></ul></div>
+<p>交配：<a href="#bakerswheat">ベーカリー小麦</a> * 2以上 [0.1%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="chocoroot" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc14">チョコルート</span><img alt="" class="wp-image-4664 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-10.png" width="220"/></h4>
+<p>平均結実時間：7ティック(21分)<br/>平均寿命：25ティック(1時間15分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#whitechocoroot">ホワイトチョコルート</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#whitemildew">白カビ</a>（平均結実時間：5ティック(15分)／平均寿命：8ティック(24分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>7ティック(21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>25ティック(1時間15分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#drowsyfern">寝落ちシダ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#keenmoss">目利きモス</a>（平均結実時間：10ティック(30分)／平均寿命：16ティック(48分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>300ティック(15時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>1000ティック(2日2時間)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#queenbeet">女王ビート</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#bakeberry">ベイクベリー</a>（平均結実時間：34ティック(1時間42分)／平均寿命：67ティック(3時間21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>67ティック(3時間21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>84ティック(4時間12分)</span></li></ul></div>
+<p>交配：( <a href="#bakerswheat">ベーカリー小麦</a> * 1以上 )&amp;( <a href="#brownmold">茶カビ</a> [未熟] * 1以上 ) [10%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="whitechocoroot" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc15">ホワイトチョコルート</span><img alt="" class="wp-image-4665 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-11.png" width="220"/></h4>
+<p>平均結実時間：7ティック(21分)<br/>平均寿命：25ティック(1時間15分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#whiskerbloom">ネコノヒゲコスリ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#shimmerlily">キラキラユリ</a>（平均結実時間：9ティック(27分)／平均寿命：13ティック(39分)）</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>20ティック(1時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>34ティック(1時間42分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#tidygrass">几帳面草</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#bakerswheat">ベーカリー小麦</a>（平均結実時間：5ティック(15分)／平均寿命：13ティック(39分)）</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>80ティック(4時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>200ティック(10時間)</span></li></ul></div>
+<p>交配：( <a href="#chocoroot">チョコルート</a> * 1以上 )&amp;( <a href="#whitemildew">白カビ</a> [未熟] * 1以上 ) [10%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="whitemildew" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc16">白カビ</span><img alt="" class="wp-image-4666 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-12.png" width="220"/></h4>
+<p>平均結実時間：5ティック(15分)<br/>平均寿命：8ティック(24分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#whitechocoroot">ホワイトチョコルート</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#chocoroot">チョコルート</a>（平均結実時間：7ティック(21分)／平均寿命：25ティック(1時間15分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>7ティック(21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>25ティック(1時間15分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#wardlichen">番人苔</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#cronerice">ローバライス</a>（平均結実時間：134ティック(6時間42分)／平均寿命：74ティック(3時間42分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>10ティック(30分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>15ティック(45分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#greenrot">グリーンロット</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#ordinaryclover">普通のクローバー</a>（平均結実時間：20ティック(1時間)／平均寿命：58ティック(2時間54分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>4ティック(12分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>6ティック(18分)</span></li></ul></div>
+
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="brownmold" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc17">茶カビ</span><img alt="" class="wp-image-4667 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-13.png" width="220"/></h4>
+<p>平均結実時間：5ティック(15分)<br/>平均寿命：8ティック(24分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#chocoroot">チョコルート</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#bakerswheat">ベーカリー小麦</a>（平均結実時間：5ティック(15分)／平均寿命：13ティック(39分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>7ティック(21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>25ティック(1時間15分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#keenmoss">目利きモス</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#greenrot">グリーンロット</a>（平均結実時間：4ティック(12分)／平均寿命：6ティック(18分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>10ティック(30分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>16ティック(48分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#wrinklegill">皺々エラ茸</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#crumbspore">パン粉玉ホコリ</a>（平均結実時間：15ティック(45分)／平均寿命：23ティック(1時間9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>26ティック(1時間18分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>40ティック(2時間)</span></li></ul></div>
+<p>交配：<span class="bold">結実期の<a href="#middleweed">お邪魔草</a>を収穫時にドロップ</span> [10% ~ 20%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="middleweed" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc18">お邪魔草</span><img alt="" class="wp-image-4668 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-14.png" width="220"/></h4>
+<p>平均結実時間：4ティック(12分)<br/>平均寿命：8ティック(24分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"></ul></div>
+<p>交配：周囲に何もないと自然生成 [0.2%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="whiskerbloom" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc19">ネコノヒゲコスリ</span><img alt="" class="wp-image-4669 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-15.png" width="220"/></h4>
+<p>平均結実時間：20ティック(1時間)<br/>平均寿命：34ティック(1時間42分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#chimerose">チャイムローズ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#shimmerlily">キラキラユリ</a>（平均結実時間：9ティック(27分)／平均寿命：13ティック(39分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>18ティック(54分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>58ティック(2時間54分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#nursetulip">保育チューリップ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#whiskerbloom">ネコノヒゲコスリ</a>（平均結実時間：20ティック(1時間)／平均寿命：34ティック(1時間42分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>40ティック(2時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>67ティック(3時間21分)</span></li></ul></div>
+<p>交配：( <a href="#shimmerlily">キラキラユリ</a> * 1以上 )&amp;( <a href="#whitechocoroot">ホワイトチョコルート</a> * 1以上 ) [1%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="chimerose" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc20">チャイムローズ</span><img alt="" class="wp-image-4670 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-16.png" width="220"/></h4>
+<p>平均結実時間：18ティック(54分)<br/>平均寿命：58ティック(2時間54分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"></ul></div>
+<p>交配：( <a href="#shimmerlily">キラキラユリ</a> * 1以上 )&amp;( <a href="#whiskerbloom">ネコノヒゲコスリ</a> * 1以上 ) [5%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="nursetulip" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc21">保育チューリップ</span><img alt="" class="wp-image-4671 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-17.png" width="220"/></h4>
+<p>平均結実時間：40ティック(2時間)<br/>平均寿命：67ティック(3時間21分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：<a href="#whiskerbloom">ネコノヒゲコスリ</a> * 2以上 [5%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="drowsyfern" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc22">寝落ちシダ</span><img alt="" class="wp-image-4672 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-18.png" width="220"/></h4>
+<p>平均結実時間：300ティック(15時間)<br/>平均寿命：1000ティック(2日2時間)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：( <a href="#chocoroot">チョコルート</a> * 1以上 )&amp;( 目利きモス * 1以上 ) [0.5%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="wardlichen" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc23">番人苔</span><img alt="" class="wp-image-4673 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-19.png" width="220"/></h4>
+<p>平均結実時間：10ティック(30分)<br/>平均寿命：15ティック(45分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"></ul></div>
+<p>交配：( <a href="#cronerice">ローバライス</a> * 1以上 )&amp;( <a href="#keenmoss">目利きモス</a> * 1以上 ) [0.5%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="keenmoss" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc24">目利きモス</span><img alt="" class="wp-image-4674 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-20.png" width="220"/></h4>
+<p>平均結実時間：10ティック(30分)<br/>平均寿命：16ティック(48分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#drowsyfern">寝落ちシダ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#chocoroot">チョコルート</a>（平均結実時間：7ティック(21分)／平均寿命：25ティック(1時間15分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>300ティック(15時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>1000ティック(2日2時間)</span></li></ul></div>
+<p>交配：( <a href="#greenrot">グリーンロット</a> * 1以上 )&amp;( <a href="#brownmold">茶カビ</a> * 1以上 ) [10%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="queenbeet" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc25">女王ビート</span><img alt="" class="wp-image-4675 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-21.png" width="220"/></h4>
+<p>平均結実時間：67ティック(3時間21分)<br/>平均寿命：84ティック(4時間12分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#juicyqueenbeet">女王ビート・豊潤</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#queenbeet">女王ビート</a>（平均結実時間：67ティック(3時間21分)／平均寿命：84ティック(4時間12分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>1063ティック(2日5時間9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>1250ティック(2日14時間30分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#duketater">公爵芋</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#queenbeet">女王ビート</a>（平均結実時間：67ティック(3時間21分)／平均寿命：84ティック(4時間12分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>212ティック(10時間36分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>223ティック(11時間9分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#shriekbulb">ギャーコン</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#queenbeet">女王ビート</a>（平均結実時間：67ティック(3時間21分)／平均寿命：84ティック(4時間12分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>18ティック(54分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>29ティック(1時間27分)</span></li></ul></div>
+<p>交配：( <a href="#chocoroot">チョコルート</a> * 1以上 )&amp;( <a href="#bakeberry">ベイクベリー</a> * 1以上 ) [1%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="juicyqueenbeet" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc26">女王ビート・豊潤</span><img alt="" class="wp-image-4676 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-22.png" width="220"/></h4>
+<p>平均結実時間：1063ティック(2日5時間9分)<br/>平均寿命：1250ティック(2日14時間30分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：<a href="#queenbeet">女王ビート</a> * 8以上 [0.1%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="duketater" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc27">公爵芋</span><img alt="" class="wp-image-4677 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-23.png" width="220"/></h4>
+<p>平均結実時間：212ティック(10時間36分)<br/>平均寿命：223ティック(11時間9分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"></ul></div>
+<p>交配：<a href="#queenbeet">女王ビート</a> * 2以上 [0.1%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="crumbspore" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc28">パン粉玉ホコリ</span><img alt="" class="wp-image-4678 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-24.png" width="220"/></h4>
+<p>平均結実時間：15ティック(45分)<br/>平均寿命：23ティック(1時間9分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#doughshroom">パン生地フスベ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span>不明</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>43ティック(2時間9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>50ティック(2時間30分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#glovemorel">グラブモレル</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#thumbcorn">親指コーン</a>（平均結実時間：3ティック(9分)／平均寿命：15ティック(45分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>7ティック(21分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>9ティック(27分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#cheapcap">ケチシメジ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#shimmerlily">キラキラユリ</a>（平均結実時間：9ティック(27分)／平均寿命：13ティック(39分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>3ティック(9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>8ティック(24分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#wrinklegill">皺々エラ茸</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#brownmold">茶カビ</a>（平均結実時間：5ティック(15分)／平均寿命：8ティック(24分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>26ティック(1時間18分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>40ティック(2時間)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#ichorpuff">ホテイアマイ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#elderwort">エルダーワート</a>（平均結実時間：164ティック(8時間12分)／平均寿命：なし</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>20ティック(1時間)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>58ティック(2時間54分)</span></li></ul></div>
+<p>交配：<span class="bold">結実期の<a href="#middleweed">お邪魔草</a>を収穫時にドロップ</span> [10% ~ 20%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="doughshroom" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc29">パン生地フスベ</span><img alt="" class="wp-image-4679 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-25.png" width="220"/></h4>
+<p>平均結実時間：43ティック(2時間9分)<br/>平均寿命：50ティック(2時間30分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#foolsbolete">ホラチーニ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#greenrot">グリーンロット</a>（平均結実時間：4ティック(12分)／平均寿命：6ティック(18分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>3ティック(9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>6ティック(18分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#shriekbulb">ギャーコン</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#doughshroom">パン生地フスベ</a>（平均結実時間：43ティック(2時間9分)／平均寿命：50ティック(2時間30分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>18ティック(54分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>29ティック(1時間27分)</span></li></ul></div>
+<p>交配；<a href="#crumbspore">パン粉玉ホコリ</a> * 2以上 [0.5%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="glovemorel" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc30">グラブモレル</span><img alt="" class="wp-image-4680 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-26.png" width="220"/></h4>
+<p>平均結実時間：7ティック(21分)<br/>平均寿命：9ティック(27分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：( <a href="#thumbcorn">親指コーン</a> * 1以上 )&amp;( <a href="#crumbspore">パン粉玉ホコリ</a> * 1以上 ) [2%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="cheapcap" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc31">ケチシメジ</span><img alt="" class="wp-image-4681 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-27.png" width="220"/></h4>
+<p>平均結実時間：3ティック(9分)<br/>平均寿命：8ティック(24分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：( <a href="#shimmerlily">キラキラユリ</a> * 1以上 )&amp;( <a href="#crumbspore">パン粉玉ホコリ</a> * 1以上 ) [4%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="foolsbolete" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc32">ホラチーニ</span><img alt="" class="wp-image-4682 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-28.png" width="220"/></h4>
+<p>平均結実時間：3ティック(9分)<br/>平均寿命：6ティック(18分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：( <a href="#doughshroom">パン生地フスベ</a> * 1以上 )&amp;( <a href="#greenrot">グリーンロット</a> * 1% ) [4%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="wrinklegill" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc33">皺々エラ茸</span><img alt="" class="wp-image-4683 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-29.png" width="220"/></h4>
+<p>平均結実時間：26ティック(1時間18分)<br/>平均寿命：40ティック(2時間)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"></ul></div>
+<p>交配：( <a href="#crumbspore">パン粉玉ホコリ</a> * 1以上 )&amp;( <a href="#brownmold">茶カビ </a>* 1以上 ) [6%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="greenrot" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc34">グリーンロット</span><img alt="" class="wp-image-4684 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-30.png" width="220"/></h4>
+<p>平均結実時間：4ティック(12分)<br/>平均寿命：6ティック(18分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#keenmoss">目利きモス</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#brownmold">茶カビ</a>（平均結実時間：5ティック(15分)／平均寿命：8ティック(24分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>10ティック(30分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>16ティック(48分)</span></li><li class="mutation-item"><span class="mutation-target"><a href="#foolsbolete">ホラチーニ</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#doughshroom">パン生地フスベ</a>（平均結実時間：43ティック(2時間9分)／平均寿命：50ティック(2時間30分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>3ティック(9分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>6ティック(18分)</span></li></ul></div>
+<p>交配：( <a href="#ordinaryclover">普通のクローバー</a> * 1以上 )&amp;( <a href="#whitemildew">白カビ</a> * 1% ) [5%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="shriekbulb" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc35">ギャーコン</span><img alt="" class="wp-image-4685 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-31.png" width="220"/></h4>
+<p>平均結実時間：18ティック(54分)<br/>平均寿命：29ティック(1時間27分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"></ul></div>
+<p>交配：<a href="#queenbeet">女王ビート</a> * 5以上 [0.1%] </p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="tidygrass" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc36">几帳面草</span><img alt="" class="wp-image-4686 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-32.png" width="220"/></h4>
+<p>平均結実時間：80ティック(4時間)<br/>平均寿命：200ティック(10時間)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target"><a href="#everdaisy">エバーデイジー</a></span><span class="mutation-detail"><span class="mutation-label">相方：</span><a href="#elderwort">エルダーワート</a>（平均結実時間：164ティック(8時間12分)／平均寿命：なし</span><span class="mutation-detail"><span class="mutation-label">変異先平均結実時間：</span>251ティック(12時間33分)</span><span class="mutation-detail"><span class="mutation-label">変異先平均寿命：</span>なし</span></li></ul></div>
+<p>交配：( <a href="#bakerswheat">ベーカリー小麦</a> * 1以上 )&amp;( <a href="#whitechocoroot">ホワイトチョコルート</a> * 1以上 ) [0.2%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="everdaisy" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc37">エバーデイジー</span><img alt="" class="wp-image-4687 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-33.png" width="220"/></h4>
+<p>平均結実時間：251ティック(12時間33分)<br/>平均寿命：なし</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：( <a href="#elderwort">エルダーワート</a> * 3以上 )&amp;( <a href="#tidygrass">几帳面草</a> * 3以上 ) [0.2%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+<div aria-hidden="true" class="wp-block-spacer" id="ichorpuff" style="height:16px"></div>
+<h4 class="wp-block-heading"><span class="plant-detail-name" id="toc38">ホテイアマイ</span><img alt="" class="wp-image-4688 plant-detail-img" decoding="async" height="54" loading="lazy" src="https://kleinsblog.com/wp-content/uploads/2021/02/crops-34.png" width="220"/></h4>
+<p>平均結実時間：20ティック(1時間)<br/>平均寿命：58ティック(2時間54分)</p>
+<div class="mutation-box"><div class="mutation-heading">変異可能性：</div><ul class="mutation-list"><li class="mutation-item"><span class="mutation-target">なし</span></li></ul></div>
+<p>交配：( <a href="#elderwort">エルダーワート</a> * 1以上 )&amp;( <a href="#crumbspore">パン粉玉ホコリ</a> * 1以上 ) [0.2%]</p>
+<p class="has-text-align-right"><a href="#fst">一覧に戻る</a></p>
+</div><!-- /.entry-content -->
+</article>
+<script>
+(() => {
+  const storageKey = 'cookiePlantsHiddenElementsV1';
+  const loadHiddenElements = () => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      return new Set(Array.isArray(saved) ? saved : []);
+    } catch (error) {
+      return new Set();
+    }
+  };
+  const hiddenElements = loadHiddenElements();
+  const saveHiddenElements = () => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify([...hiddenElements]));
+    } catch (error) {
+      // localStorageが利用できない環境でも、その場での削除は機能させる。
+    }
+  };
+
+  const grid = document.querySelector('.plant-index-grid');
+  let resetButton = null;
+  if (grid) {
+    const controls = document.createElement('div');
+    controls.className = 'plant-visibility-controls';
+    resetButton = document.createElement('button');
+    resetButton.type = 'button';
+    resetButton.className = 'plant-reset-button';
+    resetButton.textContent = '削除状態をリセット';
+    resetButton.disabled = hiddenElements.size === 0;
+    resetButton.addEventListener('click', () => {
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (error) {
+        hiddenElements.clear();
+      }
+      location.reload();
+    });
+    controls.appendChild(resetButton);
+    grid.before(controls);
+  }
+
+  const rememberRemoval = (elementKey) => {
+    hiddenElements.add(elementKey);
+    saveHiddenElements();
+    if (resetButton) resetButton.disabled = false;
+  };
+
+  const createRemoveButton = (label, elementKey, removeElement, afterRemove) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'element-remove-button';
+    button.textContent = '×';
+    button.setAttribute('aria-label', label);
+    button.title = label;
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      rememberRemoval(elementKey);
+      removeElement.remove();
+      if (afterRemove) afterRemove();
+    });
+    return button;
+  };
+
+  document.querySelectorAll('.plant-index-grid li').forEach((card) => {
+    const name = card.querySelector('.plant-jp')?.textContent.trim() || '植物';
+    const plantKey = card.querySelector('a[href^="#"]')?.getAttribute('href').slice(1) || name;
+    const elementKey = `index:${plantKey}`;
+    if (hiddenElements.has(elementKey)) {
+      card.remove();
+      return;
+    }
+    card.appendChild(createRemoveButton(`${name}の一覧カードを削除`, elementKey, card));
+  });
+
+  const entryContent = document.querySelector('#main .entry-content');
+  if (entryContent) {
+    const headings = Array.from(entryContent.children).filter((element) =>
+      element.matches('h4.wp-block-heading')
+    );
+
+    headings.forEach((heading) => {
+      const start = heading.previousElementSibling?.classList.contains('wp-block-spacer')
+        ? heading.previousElementSibling
+        : heading;
+      let end = heading;
+      while (end && !end.matches('p.has-text-align-right')) {
+        end = end.nextElementSibling;
+      }
+      if (!end) return;
+
+      const section = document.createElement('section');
+      section.className = 'plant-detail-section';
+      start.before(section);
+      let node = start;
+      while (node) {
+        const next = node.nextSibling;
+        section.appendChild(node);
+        if (node === end) break;
+        node = next;
+      }
+
+      const name = heading.querySelector('.plant-detail-name')?.textContent.trim() || '植物';
+      const plantKey = start.id || heading.querySelector('.plant-detail-name')?.id || name;
+      section.dataset.plantKey = plantKey;
+      const elementKey = `detail:${plantKey}`;
+      if (hiddenElements.has(elementKey)) {
+        section.remove();
+        return;
+      }
+      section.appendChild(createRemoveButton(`${name}の詳細を削除`, elementKey, section));
+    });
+  }
+
+  document.querySelectorAll('.mutation-item').forEach((card) => {
+    const name = card.querySelector('.mutation-target')?.textContent.trim() || '変異候補';
+    const list = card.closest('.mutation-list');
+    const plantKey = card.closest('.plant-detail-section')?.dataset.plantKey || 'unknown';
+    const elementKey = `mutation:${plantKey}:${name}`;
+    if (hiddenElements.has(elementKey)) {
+      card.remove();
+      return;
+    }
+    card.appendChild(createRemoveButton(`${name}の変異カードを削除`, elementKey, card, () => {
+      if (list && !list.querySelector('.mutation-item')) {
+        list.closest('.mutation-box')?.remove();
+      }
+    }));
+  });
+
+  document.querySelectorAll('.mutation-list').forEach((list) => {
+    if (!list.querySelector('.mutation-item')) {
+      list.closest('.mutation-box')?.remove();
+    }
+  });
+})();
+</script>
+</main>
